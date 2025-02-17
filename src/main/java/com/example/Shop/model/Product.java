@@ -1,20 +1,29 @@
 package com.example.Shop.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
+
+import java.math.BigDecimal;
+
+@Entity
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Size(min = 2, max = 255, message = "Name min: 2, max: 255")
+    @Column(nullable = false, length = 255)
     private String name;
+    @Size(min = 2, max = 1024, message = "Description min: 2, max: 1024")
+    @Column(nullable = true, length = 1024)
     private String description;
-    private double price;
-    public int stock;
-
-    public Product(long id, int stock, double price, String description, String name) {
-        this.id = id;
-        this.stock = stock;
-        this.price = price;
-        this.description = description;
-        this.name = name;
-    }
-
+    @Positive
+    @Column(precision = 8, scale = 2, nullable = false)
+    private BigDecimal price;
+    @PositiveOrZero
+    @Column(nullable = false, length = Integer.MAX_VALUE)
+    private int stock;
     public long getId() {
         return id;
     }
@@ -31,11 +40,11 @@ public class Product {
         this.stock = stock;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

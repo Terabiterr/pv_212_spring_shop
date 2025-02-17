@@ -22,7 +22,6 @@ public class HomeController {
     }
     @GetMapping("/read")
     public String read(Model model) {
-        model.addAttribute("products", productService.findAll());
         return "crud/read";
     }
 }
