@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,12 +16,12 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration // Позначає клас як конфігураційний компонент Spring Security
+@EnableMethodSecurity //For roles
 public class SecurityConfig {
-    @Autowired
-    private final JwtAuthenticationFilter jwtAuthenticationFilter; // Фільтр для обробки JWT-токенів
-    @Autowired
-    private final UserDetailsService userDetailsService; // Сервіс для отримання користувачів
 
+    private final JwtAuthenticationFilter jwtAuthenticationFilter; // Фільтр для обробки JWT-токенів
+    private final UserDetailsService userDetailsService; // Сервіс для отримання користувачів
+    @Autowired
     // Конструктор класу, який отримує необхідні залежності через ін'єкцію
     public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, UserDetailsService userDetailsService) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
@@ -43,7 +44,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable) // Вимикає CSRF-захист (для REST API зазвичай не потрібен)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/register", "/auth/login").permitAll() // Дозволяє доступ без аутентифікації до реєстрації та входу
-                        .requestMatchers("/products/**").hasAnyRole("ADMIN", "MANAGER") // Доступ до продуктів тільки для адміністраторів і менеджерів
+                        .requestMatchers("/products/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER") // Доступ до продуктів тільки для адміністраторів і менеджерів
                         .anyRequest().authenticated() // Всі інші запити вимагають аутентифікації
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // Додає фільтр JWT перед стандартним фільтром аутентифікації

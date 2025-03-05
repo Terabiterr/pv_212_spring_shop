@@ -54,10 +54,10 @@ public class AuthController {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Optional<Role> role = roleRepository.findByName("USER");
+        Optional<Role> role = roleRepository.findByName("ROLE_USER");
         if(role.isEmpty()){
             Role newUserRole = new Role();
-            newUserRole.setName("USER");
+            newUserRole.setName("ROLE_USER");
             roleRepository.save(newUserRole);
             role=Optional.of(newUserRole);
         }
