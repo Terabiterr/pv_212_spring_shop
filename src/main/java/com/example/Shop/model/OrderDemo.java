@@ -1,5 +1,7 @@
 package com.example.Shop.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
@@ -15,8 +17,10 @@ public class OrderDemo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
+    @JsonBackReference
     private User user;
-    @OneToMany
+    @OneToMany(mappedBy = "order")
+    @JsonManagedReference
     private List<OrderItem> ordersItems;
     @PositiveOrZero
     @Column(nullable = false, precision = 8, scale = 2)
