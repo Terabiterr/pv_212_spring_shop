@@ -104,6 +104,8 @@ public class RestOrderDemoController {
         response.put("order", orderDemoSaved);
         return ResponseEntity.ok(response);
     }
+    //DZ - 03.10.2025
+    //Реалізувати звичайний контролер OrderDemoController
     //@PutMapping("/{id}")
     //updateOrderDemo
     //
