@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="~{layouts/layout :: header}"></div>
+    <h1>Save</h1>
+    <form th:action="@{/products/save}" th:object="${product}" method="post">
+        <input type="hidden" name="id" th:field="*{id}">
+        <label th:for="name">Name: <input name="name" type="text" th:field="*{name}"></label><br>
+        <label th:for="description">Description: <textarea name="description" cols="30" rows="10" th:field="*{description}"></textarea></label><br>
+        <label th:for="price">Price: <input type="text" name="price" th:field="*{price}"></label><br>
+        <label th:for="stock">Stock: <input type="text" name="stock" th:field="*{stock}"></label><br>
+        <button type="submit">save</button>
+    </form>
+<div th:replace="~{layouts/layout :: footer}"></div>
+</body>
+</html>

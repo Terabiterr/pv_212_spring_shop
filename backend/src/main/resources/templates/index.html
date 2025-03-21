@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Main Shop</title>
+</head>
+<body>
+    <h1>Home page</h1>
+    <div sec:authorize="isAnonymous()">
+        <a href="/auth/login">login</a>
+        <a href="/auth/register">register</a>
+    </div>
+    <a th:href="@{/auth/logout}">Exit</a>
+</body>
+</html>

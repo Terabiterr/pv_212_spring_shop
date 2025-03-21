@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header th:fragment="header" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <nav class="header">
+        <div class="logo">
+            <a th:href="@{/products}">Shop</a>
+        </div>
+        <ul class="nav-menu">
+            <li><a th:href="@{/products}">Products</a></li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/products/save}">Add product</a>
+            </li>
+            <li sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/orders}">Order</a>
+            </li>
+            <li><a th:href="@{/orders/create}">Add Order</a></li>
+            <li sec:authorize="isAuthenticated()">
+                <a th:href="@{/auth/logout}">Exit</a>
+            </li>
+            <li sec:authorize="isAnonymous()">
+                <a th:href="@{/auth/login}">Login</a>
+            </li>
+            <li sec:authorize="isAnonymous()">
+                <a th:href="@{/auth/register}">Register</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<footer th:fragment="footer">
+    <p>&copy; Academy Step</p>
+</footer>
+</body>
+</html>
